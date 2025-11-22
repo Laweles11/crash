@@ -6,8 +6,6 @@
   <meta name="telegram-app-username" content="casinoslavik_bot">
   <title>🚀 Cosmic Crash</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
-  
-  <!-- Telegram WebApp -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
     window.Telegram = window.Telegram || {};
@@ -16,10 +14,8 @@
       themeParams: { bg_color: '#0a0a1a', text_color: '#ffffff', accent_text_color: '#ff5588' }
     };
   </script>
-
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
-
     body {
       background: linear-gradient(135deg, #0a0a1a, #120f2a);
       color: #e0e6ff;
@@ -27,14 +23,11 @@
       overflow-x: hidden;
       transition: background 0.3s;
     }
-
     .app {
       max-width: 560px;
       margin: 0 auto;
       padding: 16px;
     }
-
-    /* Header */
     .header {
       display: flex;
       justify-content: space-between;
@@ -54,8 +47,6 @@
       color: #aaa;
       text-align: right;
     }
-
-    /* Tabs */
     .tabs {
       display: flex;
       background: rgba(255, 255, 255, 0.05);
@@ -77,8 +68,6 @@
       background: linear-gradient(135deg, #ff5588, #ff2266);
       color: white;
     }
-
-    /* Balance */
     .balance-card {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 16px;
@@ -100,12 +89,51 @@
       background-clip: text;
       color: transparent;
     }
-
-    /* Panels */
+    .admin-panel {
+      background: rgba(255, 85, 136, 0.1);
+      border: 1px solid rgba(255, 85, 136, 0.3);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .admin-input {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 85, 136, 0.3);
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    .admin-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #ff5588, #ff2266);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+    .admin-btn:hover {
+      opacity: 0.9;
+    }
+    .admin-log {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 12px;
+      max-height: 120px;
+      overflow-y: auto;
+      font-size: 14px;
+      color: #aaa;
+    }
     .panel { display: none; }
     .panel.active { display: block; }
-
-    /* Game */
     .game-card {
       background: rgba(10, 10, 30, 0.7);
       border-radius: 20px;
@@ -113,7 +141,6 @@
       margin-bottom: 16px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
-
     .game-header {
       background: rgba(0, 0, 0, 0.3);
       padding: 16px 20px;
@@ -126,7 +153,6 @@
       font-weight: 700;
       color: #00d4ff;
     }
-
     .graph-area {
       height: 300px;
       background: #080818;
@@ -150,13 +176,14 @@
       font-size: 16px;
       color: #ff5500;
       animation: flame 0.1s infinite alternate;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
     }
     @keyframes flame {
       from { opacity: 0.7; transform: translateX(-50%) scale(1); }
       to { opacity: 1; transform: translateX(-50%) scale(1.15, 1.4); }
     }
-
-    /* Controls */
     .controls {
       padding: 20px;
     }
@@ -191,8 +218,6 @@
       border-color: #ff5588;
       box-shadow: 0 0 0 3px rgba(255, 85, 136, 0.2);
     }
-
-    /* Cashout button */
     .cashout-btn {
       width: 100%;
       padding: 18px;
@@ -225,7 +250,6 @@
     .cashout-icon {
       font-size: 24px;
     }
-
     .status {
       text-align: center;
       font-size: 24px;
@@ -236,8 +260,6 @@
     }
     .status.win { color: #00ffaa; }
     .status.lose { color: #ff5555; }
-
-    /* Clicker */
     .clicker-card {
       background: rgba(10, 20, 40, 0.7);
       border-radius: 20px;
@@ -270,7 +292,6 @@
       font-weight: 600;
       margin-bottom: 8px;
     }
-
     .upgrades {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -306,8 +327,6 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
-
-    /* Telegram button */
     .tg-btn {
       background: linear-gradient(135deg, #0088cc, #00aaff);
       color: white;
@@ -326,7 +345,6 @@
       justify-content: center;
       gap: 10px;
     }
-
     footer {
       text-align: center;
       padding: 20px 0 10px;
@@ -342,18 +360,19 @@
       <div class="logo">🚀 Cosmic</div>
       <div class="user" id="user-info">👤 Загрузка...</div>
     </div>
-
+    <div class="admin-panel" id="admin-panel">
+      <input type="password" class="admin-input" id="admin-pass" placeholder="Введите пароль администратора">
+      <button class="admin-btn" id="admin-login">Вход</button>
+      <div class="admin-log" id="admin-log"></div>
+    </div>
     <div class="balance-card">
       <div class="balance-label">БАЛАНС</div>
       <div class="balance-value" id="balance">1 000 ₽</div>
     </div>
-
     <div class="tabs">
       <div class="tab active" data-tab="crash">🚀 Crash</div>
       <div class="tab" data-tab="clicker">🖱️ Кликер</div>
     </div>
-
-    <!-- CRASH PANEL -->
     <div class="panel active" id="crash-panel">
       <div class="game-card">
         <div class="game-header">
@@ -388,14 +407,11 @@
         </div>
       </div>
     </div>
-
-    <!-- CLICKER PANEL -->
     <div class="panel" id="clicker-panel">
       <div class="clicker-card">
         <div class="click-value">За клик: <span id="per-click">1</span> ₽</div>
         <div class="click-target" id="click-btn">🪙</div>
         <div>Всего заработано: <span id="total-earned">0</span> ₽</div>
-
         <div class="upgrades">
           <div class="upgrade-card">
             <div class="upgrade-title">Авто-клик</div>
@@ -412,24 +428,20 @@
         </div>
       </div>
     </div>
-
     <div class="tg-btn" id="tg-btn">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
         <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM16.59 7.58L15.17 6.16L12 9.33L8.83 6.16L7.41 7.58L12 12.17L16.59 7.58Z"/>
       </svg>
       Играть в Telegram
     </div>
-
     <footer>
       Демо. Автор: <a href="https://t.me/wwpuq" target="_blank">@wwpuq</a>
     </footer>
   </div>
-
   <script>
-    // === CONFIG ===
-    const BOT_USERNAME = 'casinoslavik_bot'; // ← ЗАМЕНИ НА СВОЁ
+    const BOT_USERNAME = 'casinoslavik_bot';
+    const ADMIN_PASS = 'admin123';
 
-    // === TELEGRAM INIT ===
     Telegram.WebApp.ready();
     Telegram.WebApp.expand();
     
@@ -443,7 +455,6 @@
     const theme = Telegram.WebApp.themeParams;
     document.body.style.background = `linear-gradient(135deg, ${theme.bg_color || '#0a0a1a'}, #120f2a)`;
 
-    // === GAME STATE ===
     let balance = parseFloat(localStorage.getItem(`balance_${userId}`)) || 1000;
     let active = false;
     let coef = 1.00;
@@ -451,14 +462,14 @@
     let startTime = 0;
     let bestCoef = 8.77;
 
-    // === CLICKER STATE ===
     let perClick = 1;
     let autoSpeed = 0;
     let multiplier = 1;
     let totalEarned = 0;
     let lastAuto = Date.now();
 
-    // DOM
+    let isAdmin = false;
+
     const els = {
       balance: document.getElementById('balance'),
       bet: document.getElementById('bet'),
@@ -480,10 +491,13 @@
       multCost: document.getElementById('mult-cost'),
       buyAuto: document.getElementById('buy-auto'),
       buyMult: document.getElementById('buy-mult'),
-      tgBtn: document.getElementById('tg-btn')
+      tgBtn: document.getElementById('tg-btn'),
+      adminPanel: document.getElementById('admin-panel'),
+      adminPass: document.getElementById('admin-pass'),
+      adminLogin: document.getElementById('admin-login'),
+      adminLog: document.getElementById('admin-log')
     };
 
-    // Save state
     function saveState() {
       localStorage.setItem(`balance_${userId}`, balance);
       localStorage.setItem(`clicker_${userId}`, JSON.stringify({
@@ -497,7 +511,150 @@
       saveState();
     }
 
-    // === CRASH GAME ===
+    function logAdminAction(message) {
+      const timestamp = new Date().toLocaleTimeString();
+      const logEntry = document.createElement('div');
+      logEntry.textContent = `[${timestamp}] ${message}`;
+      els.adminLog.appendChild(logEntry);
+      els.adminLog.scrollTop = els.adminLog.scrollHeight;
+    }
+
+    function adminLogin() {
+      if (els.adminPass.value === ADMIN_PASS) {
+        isAdmin = true;
+        els.adminPanel.style.display = 'block';
+        els.adminPass.style.display = 'none';
+        els.adminLogin.textContent = '✅ Вход выполнен';
+        logAdminAction('Администратор вошёл в систему');
+        els.adminPass.value = '';
+      } else {
+        alert('Неверный пароль');
+      }
+    }
+
+    function adminCommand(cmd) {
+      if (!isAdmin) return;
+      
+      const args = cmd.trim().split(' ');
+      const command = args[0].toLowerCase();
+      
+      switch(command) {
+        case '/balance':
+          alert(`Баланс: ${balance.toLocaleString('ru')} ₽`);
+          logAdminAction('Запрос баланса');
+          break;
+          
+        case '/add':
+          const addAmount = parseFloat(args[1]);
+          if (addAmount && !isNaN(addAmount)) {
+            balance += addAmount;
+            updateBalance();
+            alert(`Добавлено: ${addAmount} ₽`);
+            logAdminAction(`Добавлено ${addAmount} ₽ (новый баланс: ${balance})`);
+          } else {
+            alert('Использование: /add [сумма]');
+          }
+          break;
+          
+        case '/remove':
+          const removeAmount = parseFloat(args[1]);
+          if (removeAmount && !isNaN(removeAmount)) {
+            balance = Math.max(0, balance - removeAmount);
+            updateBalance();
+            alert(`Вычтено: ${removeAmount} ₽`);
+            logAdminAction(`Вычтено ${removeAmount} ₽ (новый баланс: ${balance})`);
+          } else {
+            alert('Использование: /remove [сумма]');
+          }
+          break;
+          
+        case '/reset':
+          balance = 1000;
+          updateBalance();
+          alert('Баланс сброшен до 1000 ₽');
+          logAdminAction('Баланс сброшен до 1000 ₽');
+          break;
+          
+        case '/stats':
+          const stats = `Статистика:
+- Баланс: ${balance.toLocaleString('ru')} ₽
+- За клик: ${perClick * multiplier} ₽
+- Авто-клик: ${autoSpeed.toFixed(1)}/сек
+- Множитель: x${multiplier}
+- Всего заработано: ${totalEarned.toLocaleString('ru')} ₽
+- Лучший коэффициент: ${bestCoef.toFixed(2)}`;
+          alert(stats);
+          logAdminAction('Запрос статистики');
+          break;
+          
+        case '/help':
+          const helpText = `Доступные команды:
+/balance - Показать баланс
+/add [сумма] - Добавить средства
+/remove [сумма] - Вычесть средства
+/reset - Сбросить баланс
+/stats - Показать статистику
+/help - Показать это сообщение`;
+          alert(helpText);
+          logAdminAction('Запрос справки');
+          break;
+          
+        default:
+          alert('Неизвестная команда. Используйте /help для списка команд.');
+      }
+    }
+
+    const rocketState = {
+      x: 40,
+      y: 20,
+      rotation: 0,
+      coef: 1.00,
+      lastUpdateTime: 0,
+      active: false,
+      crashed: false,
+      saved: false
+    };
+
+    function loadRocketState() {
+      const savedState = localStorage.getItem(`rocket_${userId}`);
+      if (savedState) {
+        const parsed = JSON.parse(savedState);
+        rocketState.x = parsed.x;
+        rocketState.y = parsed.y;
+        rocketState.rotation = parsed.rotation;
+        rocketState.coef = parsed.coef;
+        rocketState.lastUpdateTime = parsed.lastUpdateTime;
+        rocketState.active = parsed.active;
+        rocketState.crashed = parsed.crashed;
+        rocketState.saved = parsed.saved;
+        els.rocket.style.left = `${rocketState.x}px`;
+        els.rocket.style.bottom = `${rocketState.y}px`;
+        els.rocket.style.transform = `translateX(-50%) rotate(${rocketState.rotation}deg)`;
+        coef = rocketState.coef;
+        els.status.textContent = `x${coef.toFixed(2)}`;
+      }
+    }
+
+    function saveRocketState() {
+      rocketState.saved = true;
+      localStorage.setItem(`rocket_${userId}`, JSON.stringify(rocketState));
+    }
+
+    function resetRocketState() {
+      rocketState.x = 40;
+      rocketState.y = 20;
+      rocketState.rotation = 0;
+      rocketState.coef = 1.00;
+      rocketState.lastUpdateTime = 0;
+      rocketState.active = false;
+      rocketState.crashed = false;
+      rocketState.saved = false;
+      els.rocket.style.left = `${rocketState.x}px`;
+      els.rocket.style.bottom = `${rocketState.y}px`;
+      els.rocket.style.transform = `translateX(-50%)`;
+      els.rocket.innerHTML = '🚀<div class="flame">🔥</div>';
+    }
+
     const canvas = els.graph;
     const dpr = window.devicePixelRatio || 1;
     canvas.width = canvas.offsetWidth * dpr;
@@ -532,7 +689,6 @@
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, w, h);
 
-      // Stars
       ctx.fillStyle = 'white';
       for (let i = 0; i < 50; i++) {
         const x = Math.random() * w;
@@ -543,7 +699,6 @@
         ctx.fill();
       }
 
-      // Trajectory
       if (active) {
         ctx.strokeStyle = 'rgba(0, 212, 255, 0.5)';
         ctx.lineWidth = 3;
@@ -572,9 +727,16 @@
       const x = 40 + progress * (w - 80);
       const y = h - 40 - progress * (h - 80);
       
+      rocketState.x = x;
+      rocketState.y = y;
+      rocketState.rotation = progress * 15;
+      rocketState.coef = coef;
+      rocketState.lastUpdateTime = performance.now();
+      rocketState.active = true;
+
       els.rocket.style.left = `${x}px`;
       els.rocket.style.bottom = `${y - 14}px`;
-      els.rocket.style.transform = `translateX(-50%) rotate(${progress * 15}deg)`;
+      els.rocket.style.transform = `translateX(-50%) rotate(${rocketState.rotation}deg)`;
 
       const auto = parseFloat(els.auto.value) || 2.50;
       if (parseFloat(els.auto.value) > 1.00 && coef >= auto) {
@@ -589,6 +751,7 @@
 
       els.status.textContent = `x${coef.toFixed(2)}`;
       drawGraph();
+      saveRocketState();
 
       requestAnimationFrame(animateRocket);
     }
@@ -596,9 +759,13 @@
     function explode() {
       sound('lose');
       els.rocket.innerHTML = '💥';
+      rocketState.crashed = true;
+      saveRocketState();
       setTimeout(() => {
         els.rocket.innerHTML = '🚀<div class="flame">🔥</div>';
-        els.rocket.style.transform = 'translateX(-50%)';
+        rocketState.crashed = false;
+        resetRocketState();
+        saveRocketState();
       }, 500);
     }
 
@@ -619,6 +786,10 @@
       targetCrashPoint = 1.00 + Math.pow(Math.random(), 2.0) * 5;
       bestCoef = Math.max(bestCoef, targetCrashPoint);
 
+      resetRocketState();
+      rocketState.active = true;
+      rocketState.lastUpdateTime = startTime;
+
       els.btnText.textContent = '🪂 КЭШАУТ';
       els.playBtn.style.background = 'linear-gradient(135deg, #00d4ff, #00aaff)';
       els.playBtn.style.boxShadow = '0 6px 20px rgba(0, 212, 255, 0.4)';
@@ -632,6 +803,7 @@
 
     function stopRound(won = true, cashout = null) {
       active = false;
+      rocketState.active = false;
       const finalCoef = cashout || (won ? coef : targetCrashPoint);
       const bet = parseFloat(els.bet.value);
 
@@ -650,9 +822,8 @@
       updateBalance();
       
       setTimeout(() => {
-        els.rocket.style.left = '40px';
-        els.rocket.style.bottom = '20px';
-        els.rocket.style.transform = 'translateX(-50%)';
+        resetRocketState();
+        saveRocketState();
         els.btnText.textContent = 'СТАРТ';
         els.playBtn.style.background = 'linear-gradient(135deg, #ff5588, #ff2266)';
         els.playBtn.style.boxShadow = '0 6px 20px rgba(255, 85, 136, 0.4)';
@@ -661,7 +832,6 @@
       }, 1800);
     }
 
-    // === CLICKER ===
     function loadClicker() {
       const saved = localStorage.getItem(`clicker_${userId}`);
       if (saved) {
@@ -693,7 +863,6 @@
       updateBalance();
       updateClickerUI();
       
-      // Animation
       els.clickBtn.style.transform = 'scale(0.9)';
       setTimeout(() => els.clickBtn.style.transform = 'scale(1)', 100);
     }
@@ -718,7 +887,6 @@
       }
     }
 
-    // Auto-click loop
     setInterval(() => {
       if (autoSpeed > 0) {
         const earn = perClick * multiplier * autoSpeed * 0.1;
@@ -728,7 +896,6 @@
       }
     }, 100);
 
-    // === TABS ===
     els.tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         els.tabs.forEach(t => t.classList.remove('active'));
@@ -738,13 +905,19 @@
       });
     });
 
-    // === INIT ===
     els.playBtn.onclick = () => active ? stopRound(true) : startRound();
     els.clickBtn.onclick = click;
     els.buyAuto.onclick = buyAuto;
     els.buyMult.onclick = buyMult;
+    els.adminLogin.onclick = () => {
+      if (els.adminPass.style.display === 'none') {
+        const cmd = prompt('Введите команду (например, /help):');
+        if (cmd) adminCommand(cmd);
+      } else {
+        adminLogin();
+      }
+    };
 
-    // Online counter
     let online = 1200 + Math.floor(Math.random() * 300);
     setInterval(() => {
       online += Math.floor(Math.random() * 10) - 4;
@@ -752,7 +925,6 @@
       els.onlineCount.textContent = online.toLocaleString('ru');
     }, 4000);
 
-    // Telegram button
     els.tgBtn.onclick = () => {
       const url = encodeURIComponent(window.location.href);
       const tgUrl = `https://t.me/${BOT_USERNAME}/app?startapp=crash&url=${url}`;
@@ -767,6 +939,7 @@
       els.tgBtn.style.display = 'none';
     }
 
+    loadRocketState();
     updateBalance();
     loadClicker();
     drawGraph();
