@@ -89,49 +89,6 @@
       background-clip: text;
       color: transparent;
     }
-    .admin-panel {
-      background: rgba(255, 85, 136, 0.1);
-      border: 1px solid rgba(255, 85, 136, 0.3);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
-      display: none;
-    }
-    .admin-input {
-      width: 100%;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 85, 136, 0.3);
-      border-radius: 12px;
-      color: white;
-      font-size: 16px;
-      margin-bottom: 12px;
-    }
-    .admin-btn {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, #ff5588, #ff2266);
-      border: none;
-      border-radius: 12px;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-bottom: 8px;
-    }
-    .admin-btn:hover {
-      opacity: 0.9;
-    }
-    .admin-log {
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 12px;
-      max-height: 120px;
-      overflow-y: auto;
-      font-size: 14px;
-      color: #aaa;
-    }
     .panel { display: none; }
     .panel.active { display: block; }
     .game-card {
@@ -327,6 +284,77 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
+    .admin-console {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255, 85, 136, 0.3);
+    }
+    .admin-login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .admin-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 85, 136, 0.3);
+      border-radius: 14px;
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+    .admin-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #ff5588, #ff2266);
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .admin-btn:hover {
+      opacity: 0.9;
+    }
+    .admin-controls {
+      display: none;
+    }
+    .admin-controls.active {
+      display: block;
+    }
+    .admin-commands {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .admin-command-btn {
+      padding: 12px;
+      background: rgba(255, 85, 136, 0.2);
+      border: 1px solid rgba(255, 85, 136, 0.3);
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .admin-command-btn:hover {
+      background: rgba(255, 85, 136, 0.3);
+    }
+    .admin-log {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 16px;
+      max-height: 150px;
+      overflow-y: auto;
+      font-size: 14px;
+      color: #aaa;
+      border: 1px solid rgba(255, 85, 136, 0.2);
+    }
     .tg-btn {
       background: linear-gradient(135deg, #0088cc, #00aaff);
       color: white;
@@ -360,11 +388,6 @@
       <div class="logo">🚀 Cosmic</div>
       <div class="user" id="user-info">👤 Загрузка...</div>
     </div>
-    <div class="admin-panel" id="admin-panel">
-      <input type="password" class="admin-input" id="admin-pass" placeholder="Введите пароль администратора">
-      <button class="admin-btn" id="admin-login">Вход</button>
-      <div class="admin-log" id="admin-log"></div>
-    </div>
     <div class="balance-card">
       <div class="balance-label">БАЛАНС</div>
       <div class="balance-value" id="balance">1 000 ₽</div>
@@ -372,6 +395,7 @@
     <div class="tabs">
       <div class="tab active" data-tab="crash">🚀 Crash</div>
       <div class="tab" data-tab="clicker">🖱️ Кликер</div>
+      <div class="tab" data-tab="admin">⚙️ Админ</div>
     </div>
     <div class="panel active" id="crash-panel">
       <div class="game-card">
@@ -425,6 +449,25 @@
             <div class="upgrade-cost">Стоимость: <span id="mult-cost">200</span> ₽</div>
             <button class="upgrade-btn" id="buy-mult">Улучшить</button>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="admin-panel">
+      <div class="admin-console">
+        <div class="admin-login-form" id="admin-login-form">
+          <input type="password" class="admin-input" id="admin-pass" placeholder="Введите пароль администратора">
+          <button class="admin-btn" id="admin-login">Войти в панель</button>
+        </div>
+        <div class="admin-controls" id="admin-controls">
+          <div class="admin-commands">
+            <button class="admin-command-btn" data-cmd="/balance">Баланс</button>
+            <button class="admin-command-btn" data-cmd="/add">Добавить</button>
+            <button class="admin-command-btn" data-cmd="/remove">Вычесть</button>
+            <button class="admin-command-btn" data-cmd="/reset">Сбросить</button>
+            <button class="admin-command-btn" data-cmd="/stats">Статистика</button>
+            <button class="admin-command-btn" data-cmd="/help">Справка</button>
+          </div>
+          <div class="admin-log" id="admin-log"></div>
         </div>
       </div>
     </div>
@@ -492,10 +535,12 @@
       buyAuto: document.getElementById('buy-auto'),
       buyMult: document.getElementById('buy-mult'),
       tgBtn: document.getElementById('tg-btn'),
-      adminPanel: document.getElementById('admin-panel'),
+      adminLoginForm: document.getElementById('admin-login-form'),
       adminPass: document.getElementById('admin-pass'),
       adminLogin: document.getElementById('admin-login'),
-      adminLog: document.getElementById('admin-log')
+      adminControls: document.getElementById('admin-controls'),
+      adminLog: document.getElementById('admin-log'),
+      adminCommandBtns: document.querySelectorAll('.admin-command-btn')
     };
 
     function saveState() {
@@ -522,11 +567,10 @@
     function adminLogin() {
       if (els.adminPass.value === ADMIN_PASS) {
         isAdmin = true;
-        els.adminPanel.style.display = 'block';
-        els.adminPass.style.display = 'none';
-        els.adminLogin.textContent = '✅ Вход выполнен';
-        logAdminAction('Администратор вошёл в систему');
+        els.adminLoginForm.style.display = 'none';
+        els.adminControls.classList.add('active');
         els.adminPass.value = '';
+        logAdminAction('Администратор вошёл в систему');
       } else {
         alert('Неверный пароль');
       }
@@ -545,26 +589,22 @@
           break;
           
         case '/add':
-          const addAmount = parseFloat(args[1]);
+          const addAmount = parseFloat(prompt('Введите сумму для добавления:', '1000'));
           if (addAmount && !isNaN(addAmount)) {
             balance += addAmount;
             updateBalance();
             alert(`Добавлено: ${addAmount} ₽`);
             logAdminAction(`Добавлено ${addAmount} ₽ (новый баланс: ${balance})`);
-          } else {
-            alert('Использование: /add [сумма]');
           }
           break;
           
         case '/remove':
-          const removeAmount = parseFloat(args[1]);
+          const removeAmount = parseFloat(prompt('Введите сумму для вычета:', '100'));
           if (removeAmount && !isNaN(removeAmount)) {
             balance = Math.max(0, balance - removeAmount);
             updateBalance();
             alert(`Вычтено: ${removeAmount} ₽`);
             logAdminAction(`Вычтено ${removeAmount} ₽ (новый баланс: ${balance})`);
-          } else {
-            alert('Использование: /remove [сумма]');
           }
           break;
           
@@ -909,14 +949,13 @@
     els.clickBtn.onclick = click;
     els.buyAuto.onclick = buyAuto;
     els.buyMult.onclick = buyMult;
-    els.adminLogin.onclick = () => {
-      if (els.adminPass.style.display === 'none') {
-        const cmd = prompt('Введите команду (например, /help):');
-        if (cmd) adminCommand(cmd);
-      } else {
-        adminLogin();
-      }
-    };
+    els.adminLogin.onclick = adminLogin;
+    
+    els.adminCommandBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        adminCommand(btn.dataset.cmd);
+      });
+    });
 
     let online = 1200 + Math.floor(Math.random() * 300);
     setInterval(() => {
