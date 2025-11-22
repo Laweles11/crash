@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="telegram-app-username" content="casinoslavik_bot">
   <title>🚀 Cosmic Crash</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js "></script>
   
   <!-- Telegram WebApp -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js "></script>
   <script>
     window.Telegram = window.Telegram || {};
     window.Telegram.WebApp = window.Telegram.WebApp || {
@@ -405,7 +405,7 @@
           </div>
           <div class="upgrade-card">
             <div class="upgrade-title">Множитель</div>
-            <div>x<span id="multiplier">1</span></div>
+            <div>Множитель: <span id="multiplier">1</span></div>
             <div class="upgrade-cost">Стоимость: <span id="mult-cost">200</span> ₽</div>
             <button class="upgrade-btn" id="buy-mult">Улучшить</button>
           </div>
@@ -421,7 +421,7 @@
     </div>
 
     <footer>
-      Демо. Автор: <a href="https://t.me/wwpuq" target="_blank">@wwpuq</a>
+      Демо. Автор: <a href="https://t.me/wwpuq " target="_blank">@wwpuq</a>
     </footer>
   </div>
 
@@ -450,37 +450,6 @@
     let targetCrashPoint = 1.00;
     let startTime = 0;
     let bestCoef = 8.77;
-    
-    // === ROCKET STATE ===
-    let rocketState = {
-      x: 40,
-      y: 20,
-      rotation: 0,
-      lastUpdateTime: 0
-    };
-    
-    // Load saved rocket state
-    function loadRocketState() {
-      const saved = localStorage.getItem(`rocket_${userId}`);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (parsed.x !== undefined && parsed.y !== undefined && parsed.rotation !== undefined && parsed.lastUpdateTime !== undefined) {
-            rocketState = parsed;
-          }
-        } catch (e) {
-          console.warn('Failed to load rocket state:', e);
-        }
-      }
-    }
-    
-    // Save rocket state
-    function saveRocketState() {
-      localStorage.setItem(`rocket_${userId}`, JSON.stringify(rocketState));
-    }
-    
-    // Initialize rocket position from saved state
-    loadRocketState();
 
     // === CLICKER STATE ===
     let perClick = 1;
@@ -605,15 +574,7 @@
       
       els.rocket.style.left = `${x}px`;
       els.rocket.style.bottom = `${y - 14}px`;
-      const rotation = progress * 15;
-      els.rocket.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
-
-      // Update rocket state
-      rocketState.x = x;
-      rocketState.y = y;
-      rocketState.rotation = rotation;
-      rocketState.lastUpdateTime = Date.now();
-      saveRocketState();
+      els.rocket.style.transform = `translateX(-50%) rotate(${progress * 15}deg)`;
 
       const auto = parseFloat(els.auto.value) || 2.50;
       if (parseFloat(els.auto.value) > 1.00 && coef >= auto) {
@@ -635,11 +596,6 @@
     function explode() {
       sound('lose');
       els.rocket.innerHTML = '💥';
-      
-      // Update rocket state for explosion
-      rocketState.lastUpdateTime = Date.now();
-      saveRocketState();
-      
       setTimeout(() => {
         els.rocket.innerHTML = '🚀<div class="flame">🔥</div>';
         els.rocket.style.transform = 'translateX(-50%)';
@@ -662,13 +618,6 @@
       startTime = performance.now();
       targetCrashPoint = 1.00 + Math.pow(Math.random(), 2.0) * 5;
       bestCoef = Math.max(bestCoef, targetCrashPoint);
-
-      // Reset rocket state at start of round
-      rocketState.x = 40;
-      rocketState.y = 20;
-      rocketState.rotation = 0;
-      rocketState.lastUpdateTime = Date.now();
-      saveRocketState();
 
       els.btnText.textContent = '🪂 КЭШАУТ';
       els.playBtn.style.background = 'linear-gradient(135deg, #00d4ff, #00aaff)';
@@ -704,14 +653,6 @@
         els.rocket.style.left = '40px';
         els.rocket.style.bottom = '20px';
         els.rocket.style.transform = 'translateX(-50%)';
-        
-        // Reset rocket state
-        rocketState.x = 40;
-        rocketState.y = 20;
-        rocketState.rotation = 0;
-        rocketState.lastUpdateTime = Date.now();
-        saveRocketState();
-        
         els.btnText.textContent = 'СТАРТ';
         els.playBtn.style.background = 'linear-gradient(135deg, #ff5588, #ff2266)';
         els.playBtn.style.boxShadow = '0 6px 20px rgba(255, 85, 136, 0.4)';
